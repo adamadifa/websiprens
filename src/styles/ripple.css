@@ -1,0 +1,92 @@
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.7);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-18px);}
+}
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-10px);}
+}
+.animate-float-badge {
+  animation: floatBadge 3s ease-in-out infinite;
+}
+
+@keyframes floatX {
+  0%, 100% { transform: translateX(0);}
+  50% { transform: translateX(18px);}
+}
+
+/* Animasi bulatan ReasonSection */
+
+@keyframes vertical-marquee {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+.vertical-marquee {
+  animation: vertical-marquee 10s linear infinite;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-18px);}
+}
+@keyframes floatXY {
+  0%, 100% { transform: translate(0,0);}
+  25% { transform: translate(8px,-8px);}
+  50% { transform: translate(0,-16px);}
+  75% { transform: translate(-8px,-8px);}
+}
+.animate-float-y {
+  animation: floatY 3.2s ease-in-out infinite;
+}
+.animate-float-x {
+  animation: floatX 4s ease-in-out infinite;
+}
+.animate-float-xy {
+  animation: floatXY 5s ease-in-out infinite;
+}
+
+.float-y { animation: floatY 3s ease-in-out infinite; }
+.float-y-delay { animation: floatY 3.6s ease-in-out infinite; animation-delay: 0.8s; }
+.float-x { animation: floatX 2.5s ease-in-out infinite; }
+.float-x-delay { animation: floatX 3.2s ease-in-out infinite; animation-delay: 1.1s; }
+
+.ripple-anim {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #4fd1c5 40%, #fff0 100%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 2.5s linear infinite;
+  z-index: -10;
+  opacity: 0.7;
+}
+
+@keyframes marqueeUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+.marquee-vertical {
+  will-change: transform;
+}

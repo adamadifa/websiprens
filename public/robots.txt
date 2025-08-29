@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://persis80alamin.com
+
+# Sitemaps
+Sitemap: https://persis80alamin.com/sitemap.xml

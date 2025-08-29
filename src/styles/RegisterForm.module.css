@@ -1,0 +1,403 @@
+.formGroup {
+  position: relative;
+  /* Tidak perlu padding-bottom, biarkan errorMsg pakai margin */
+}
+
+.leftBgImage {
+  position: relative;
+  background-image: url('/assets/images/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.leftBgImage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(15,118,110,0.92) 70%, rgba(15,118,110,0.7) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.leftBgImage > * {
+  position: relative;
+  z-index: 3;
+}
+
+.logoCorner {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  width: 256px;
+  height: auto;
+  z-index: 10;
+  filter: drop-shadow(0 2px 8px rgba(15,118,110,0.14));
+}
+.headlineTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+}
+.headlineSubtitle {
+  font-size: 1.5rem;
+  color: #0f766e;
+  font-weight: 700;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .headlineTitle {
+    font-size: 1.3rem;
+  }
+  .headlineSubtitle {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .logoCorner {
+    top: 14px;
+    left: 14px;
+    width: 128px;
+  }
+}
+
+.mobileStack > div {
+  margin-bottom: 24px;
+}
+@media (min-width: 768px) {
+  .mobileStack > div {
+    margin-bottom: 0;
+  }
+}
+
+.radioGroupWrapper {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 18px 36px 6px 24px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 1.5px rgba(60,60,60,0.03);
+  min-height: 48px;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+.radioGroupWrapper:focus-within {
+  border-color: #0f766e;
+  box-shadow: 0 2px 8px 0 rgba(15,118,110,0.08);
+}
+
+.radioGroup {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  margin-top: 8px;
+}
+.radioItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+  gap: 8px;
+  position: relative;
+}
+.radioInput {
+  display: none;
+}
+.radioCustom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #bdbdbd;
+  border-radius: 50%;
+  background: #fff;
+  margin-right: 2px;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.radioInput:checked + .radioCustom {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px #a7f3d0;
+}
+.radioInput:checked + .radioCustom::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f766e;
+}
+.radioCustom::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: background 0.2s;
+}
+.radioLabel {
+  font-size: 15px;
+  color: #444;
+  font-weight: 500;
+  user-select: none;
+}
+
+.error {
+  border-width: 1px !important;
+  border-color: #e11d48 !important;
+  box-shadow: 0 0 0 1px #fca5a5 !important;
+}
+
+.errorMsg {
+  color: #e11d48;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.inputField {
+  width: 100%;
+  height: 48px;
+  padding: 0 36px 0 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 1.5px rgba(60,60,60,0.03);
+  line-height: 48px;
+  box-sizing: border-box;
+}
+.inputField:focus {
+  border-color: #0f766e;
+  box-shadow: 0 1px 8px 0 rgba(15,118,110,0.08);
+}
+.inputField:hover {
+  border-color: #a7f3d0;
+}
+select.inputField {
+  padding-left: 24px;
+  padding-right: 32px;
+  min-height: 48px;
+  line-height: 1.2;
+  appearance: none;
+  vertical-align: middle;
+}
+
+.genderRadioWrapper {
+  margin-bottom: 20px;
+}
+.genderLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+.genderRadioGroup {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-top: 0;
+  flex-direction: column;
+  padding-left: 0;
+}
+
+@media (max-width: 600px) {
+  .genderRadioGroup {
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .genderRadioItem {
+    padding: 6px 10px 6px 4px;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .genderRadioCustom {
+    width: 16px;
+    height: 16px;
+  }
+  .genderRadioText {
+    font-size: 13px;
+  }
+}
+@media (min-width: 768px) {
+  .genderRadioGroup {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+.genderRadioItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 12px;
+  padding: 10px 22px 10px 8px;
+  border-radius: 999px;
+  background: #f7fafc;
+  transition: box-shadow 0.18s, background 0.18s;
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  user-select: none;
+  border: 1.5px solid transparent;
+}
+.genderRadioItem:hover, .genderRadioInput:focus + .genderRadioCustom + .genderRadioText {
+  background: #e0f2f1;
+}
+.genderRadioInput:checked + .genderRadioCustom + .genderRadioText,
+.genderRadioItem:has(.genderRadioInput:checked) {
+  background: #e0f2f1;
+  box-shadow: 0 2px 12px 0 rgba(15,118,110,0.10);
+  border-color: #0f766e;
+}
+.genderRadioInput {
+  display: none;
+}
+.genderRadioCustom {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid #bdbdbd;
+  border-radius: 50%;
+  background: #fff;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(60,60,60,0.04);
+}
+.genderRadioInput:checked + .genderRadioCustom {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 4px #a7f3d0;
+}
+.genderRadioInput:checked + .genderRadioCustom::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f766e;
+}
+.genderRadioCustom::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  transition: background 0.2s;
+}
+.genderRadioText {
+  font-size: 16px;
+  color: #222;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.unitRadioWrapper {
+  margin-bottom: 20px;
+}
+.unitLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+.unitRadioGroup {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+.unitRadioItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: #f7fafc;
+  transition: box-shadow 0.18s, background 0.18s, border-color 0.18s;
+  position: relative;
+  font-size: 15px;
+  font-weight: 700;
+  user-select: none;
+  border: 2px solid #e2e8f0;
+  color: #0f766e;
+  min-width: 64px;
+  justify-content: center;
+}
+.unitRadioItem:hover, .unitRadioInput:focus + .unitRadioCustom {
+  background: #e0f2f1;
+}
+.unitRadioInput:checked + .unitRadioCustom,
+.unitRadioItem:has(.unitRadioInput:checked) {
+  background: #0f766e;
+  color: #fff;
+  border-color: #0f766e;
+  box-shadow: 0 2px 12px 0 rgba(15,118,110,0.10);
+}
+.unitRadioInput {
+  display: none;
+}
+.unitRadioCustom {
+  font-size: 15px;
+  font-weight: 700;
+  color: inherit;
+  transition: color 0.18s;
+}
+
+.label {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: #fff;
+  padding: 0 4px;
+  color: #6b6f74;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: 0.2s;
+  z-index: 2;
+}
+
+.iconSearch {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bdbdbd;
+  font-size: 18px;
+  pointer-events: none;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.18s;
+}
+.iconSearch.errorIcon {
+  transform: translateY(-100%);
+}
