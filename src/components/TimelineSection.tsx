@@ -1,21 +1,19 @@
 "use client";
 import React from "react";
 import { Edit, CreditCard, Upload, Printer } from "react-feather";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const timeline = [
-  { tahap: "Pendaftaran Dibuka", waktu: "1 Juli 2025", done: true },
-  { tahap: "Verifikasi Berkas", waktu: "3-7 Juli 2025", done: true },
-  { tahap: "Tes Seleksi", waktu: "10 Juli 2025", done: false },
-  { tahap: "Pengumuman", waktu: "15 Juli 2025", done: false },
-  { tahap: "Daftar Ulang", waktu: "20-22 Juli 2025", done: false }
+  { tahap: "Pendaftaran Dibuka", waktu: "", done: true },
+  { tahap: "Verifikasi Berkas", waktu: "", done: false },
+  { tahap: "Tes Seleksi", waktu: "", done: false },
+  { tahap: "Pengumuman", waktu: "", done: false },
+  { tahap: "Daftar Ulang", waktu: "", done: false }
 ];
 
 export default function TimelineSection() {
   // Cari tahap aktif (done: false pertama)
   const activeIdx = timeline.findIndex((t) => !t.done);
-  const router = useRouter();
   return (
     <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 w-full font-poppins border border-teal-100 animate-fade-in transition-all duration-500">
       <h3 className="font-bold text-lg mb-4 text-teal-900">Timeline Pendaftaran</h3>
@@ -35,15 +33,15 @@ export default function TimelineSection() {
             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" /></svg>
           );
           return (
-            <li key={i} className={`flex items-start relative min-h-[56px]`}> 
+            <li key={i} className={`flex items-start relative min-h-[56px]`}>
               {/* Nomor bulat */}
               <div className="flex flex-col items-center z-10">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 font-bold text-lg shadow-sm ${circleColor} relative`}>{icon}
                   {isActive && <span className="absolute -top-2 -right-2 bg-blue-100 text-blue-600 text-xs font-bold px-2 py-0.5 rounded-full shadow animate-bounce">Aktif</span>}
                 </div>
                 {/* Garis putus-putus */}
-                {i < timeline.length-1 && (
-                  <div className="w-1 h-10 border-r-2 border-dashed mt-1" style={{borderColor: isDone ? '#22c55e' : '#d1d5db'}}></div>
+                {i < timeline.length - 1 && (
+                  <div className="w-1 h-10 border-r-2 border-dashed mt-1" style={{ borderColor: isDone ? '#22c55e' : '#d1d5db' }}></div>
                 )}
               </div>
               {/* Konten */}

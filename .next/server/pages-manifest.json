@@ -2,6 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/news/[slug]": "pages/news/[slug].js"
+  "/dashboard": "pages/dashboard.js",
+  "/konfirmasipembayaran": "pages/konfirmasipembayaran.js",
+  "/login": "pages/login.js",
+  "/formulirpendaftaran": "pages/formulirpendaftaran.js"
 }

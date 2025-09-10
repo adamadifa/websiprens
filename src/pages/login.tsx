@@ -1,6 +1,8 @@
 // Migrated from app/login/page.tsx
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "react-feather";
 import api from '../api/axios';
@@ -43,7 +45,7 @@ export default function LoginPage() {
     setError((prev) => ({ ...prev, [name]: validate(name, value) }));
   };
 
-  const router = typeof window !== "undefined" ? require('next/router').useRouter() : null;
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,12 +84,18 @@ export default function LoginPage() {
             />
           ));
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
+        const errorMessage = err && typeof err === 'object' && 'response' in err &&
+          err.response && typeof err.response === 'object' && 'data' in err.response &&
+          err.response.data && typeof err.response.data === 'object' && 'message' in err.response.data
+          ? (err.response.data as { message: string }).message
+          : "Terjadi kesalahan. Silakan coba lagi.";
+
         toast.custom((t) => (
           <CustomToast
             type="error"
             title="Login Error"
-            message={err?.response?.data?.message || "Terjadi kesalahan. Silakan coba lagi."}
+            message={errorMessage}
             onClose={() => toast.dismiss(t.id)}
           />
         ));
@@ -108,7 +116,7 @@ export default function LoginPage() {
         <div className="flex flex-col justify-center items-center w-full max-w-xl px-8 py-12 bg-white">
           <div className="w-full max-w-sm">
             <div className="flex items-center gap-2 mb-10">
-              <img src="/assets/images/logo/alamin.png" alt="SoftQA Logo" className="w-9 h-9" />
+              <Image src="/assets/images/logo/alamin.png" alt="SoftQA Logo" width={36} height={36} className="w-9 h-9" />
               <span className="font-bold text-xl tracking-tight text-gray-900">SPMB</span>
             </div>
             <h2 className="text-2xl font-semibold mb-1 text-gray-900">Selamat Datang Kembali</h2>
@@ -135,7 +143,7 @@ export default function LoginPage() {
                 </div>
                 {error.email && touched.email && (
                   <div className="text-rose-500 text-xs font-medium mt-1 flex items-center gap-1">
-                    <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#F87171"/><path d="M8 5v3.5" stroke="#fff" strokeWidth="1.3" strokeLinecap="round"/><circle cx="8" cy="11" r=".8" fill="#fff"/></svg>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#F87171" /><path d="M8 5v3.5" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" /><circle cx="8" cy="11" r=".8" fill="#fff" /></svg>
                     {error.email}
                   </div>
                 )}
@@ -168,7 +176,7 @@ export default function LoginPage() {
                 </div>
                 {error.password && touched.password && (
                   <div className="text-rose-500 text-xs font-medium mt-1 flex items-center gap-1">
-                    <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#F87171"/><path d="M8 5v3.5" stroke="#fff" strokeWidth="1.3" strokeLinecap="round"/><circle cx="8" cy="11" r=".8" fill="#fff"/></svg>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#F87171" /><path d="M8 5v3.5" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" /><circle cx="8" cy="11" r=".8" fill="#fff" /></svg>
                     {error.password}
                   </div>
                 )}
@@ -199,12 +207,12 @@ export default function LoginPage() {
                 <div className="flex-grow h-px bg-gray-200" />
               </div>
               <button type="button" className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2.5 text-gray-800 font-medium bg-white hover:bg-gray-50 transition">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5" />
+                <Image src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width={20} height={20} className="h-5 w-5" />
                 Continue with Google
               </button>
             </form>
             <div className="mt-8 text-center text-sm text-gray-500">
-              Don't have an Account?{' '}
+              Don&apos;t have an Account?{' '}
               <Link href="/register" className="text-teal-700 font-semibold hover:underline">Sign Up</Link>
             </div>
           </div>
@@ -212,7 +220,7 @@ export default function LoginPage() {
         {/* Right: Model Image Only */}
         <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-teal-900 to-teal-600 relative overflow-hidden">
           {/* Overlay background image */}
-          <img src="/assets/images/bg.png" alt="Overlay" className="absolute inset-0 w-full h-full object-cover opacity-10 z-0 pointer-events-none select-none" />
+          <Image src="/assets/images/bg.png" alt="Overlay" fill className="absolute inset-0 w-full h-full object-cover opacity-10 z-0 pointer-events-none select-none" />
           {/* Ornamen blur lingkaran */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-teal-300 opacity-30 rounded-full blur-3xl z-0 pointer-events-none" />
           {/* Bubble SVG putih */}
@@ -224,7 +232,7 @@ export default function LoginPage() {
           {/* Model student */}
           {/* Ripple effect di belakang model */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-            <svg width="420" height="420" viewBox="0 0 420 420" fill="none" className="block" style={{maxWidth:'80vw',maxHeight:'60vw'}}>
+            <svg width="420" height="420" viewBox="0 0 420 420" fill="none" className="block" style={{ maxWidth: '80vw', maxHeight: '60vw' }}>
               <circle className="ripple1" cx="210" cy="210" r="80" stroke="#2dd4bf" strokeWidth="3" fill="none" />
               <circle className="ripple2" cx="210" cy="210" r="110" stroke="#5eead4" strokeWidth="2.5" fill="none" />
               <circle className="ripple3" cx="210" cy="210" r="140" stroke="#99f6e4" strokeWidth="2" fill="none" />
@@ -260,16 +268,18 @@ export default function LoginPage() {
             `}</style>
           </div>
           <div className="relative z-10 w-full flex items-center justify-center">
-            <img 
+            <Image
               src="/assets/images/model3.png"
               alt="Model"
+              width={500}
+              height={600}
               className="max-w-xs md:max-w-md lg:max-w-xl w-full h-auto object-contain mx-auto drop-shadow-2xl"
               style={{ marginTop: '2rem', marginBottom: '2rem' }}
             />
             {/* Box promosi Ayo Bergabung */}
             <div className="absolute left-1/2 -translate-x-1/2 bottom-[-3.5rem] md:bottom-[-4.5rem] w-[95vw] max-w-2xl z-30">
               <div className="bg-gradient-to-br from-teal-900/80 to-teal-600/80 backdrop-blur-md rounded-2xl shadow-2xl px-6 py-6 md:px-10 md:py-8 border border-white/10">
-                <h2 className="text-white text-xl md:text-3xl font-bold mb-2 leading-tight">AYO BERGABUNG BERSAMA<br className='hidden md:block'/> PESANTREN PERSIS 80 AL AMIN</h2>
+                <h2 className="text-white text-xl md:text-3xl font-bold mb-2 leading-tight">AYO BERGABUNG BERSAMA<br className='hidden md:block' /> PONDOK PESANTREN RIYADUL FALAH</h2>
                 <p className="text-white/90 text-sm md:text-base font-medium leading-normal">Daftar sekarang untuk menjadi bagian dari kami. Bersama kita wujudkan generasi muda yang Berakhlak Mulia, Tafaquh Fiddien, Berprestasi</p>
               </div>
             </div>
@@ -278,13 +288,13 @@ export default function LoginPage() {
               <div className="bg-gradient-to-br from-white via-teal-50 to-teal-200 rounded-2xl shadow-2xl border border-teal-100 px-5 py-3 flex items-center gap-3 min-w-[210px] max-w-xs fade-in-badge">
                 <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-teal-500">
                   <svg width="22" height="22" fill="none" viewBox="0 0 22 22">
-                    <circle cx="11" cy="11" r="11" fill="#14b8a6"/>
-                    <path d="M7 12.5l3 3 5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="11" cy="11" r="11" fill="#14b8a6" />
+                    <path d="M7 12.5l3 3 5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
                 <div>
-                  <div className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">88%</div>
-                  <div className="text-xs md:text-sm font-semibold text-teal-800 leading-tight">Lulusan Diterima<br className="hidden md:block"/> di Kampus Favorit</div>
+                  <div className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">Ayo</div>
+                  <div className="text-xs md:text-sm font-semibold text-teal-800 leading-tight">Bergabung<br className="hidden md:block" />Besama Kami</div>
                 </div>
               </div>
             </div>
@@ -308,30 +318,30 @@ export default function LoginPage() {
             {/* Label Tauhidullah */}
             <div className="absolute left-1/2 -translate-x-[180%] top-[3%] md:top-[10%] animate-floatY1 flex items-center gap-2 bg-white/90 rounded-xl shadow-lg px-3 py-1 border border-teal-200">
               <span className="inline-flex items-center justify-center w-6 h-6 bg-teal-500 rounded-full">
-                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><rect x="3" y="4" width="10" height="8" rx="2" fill="#fff"/><rect x="3" y="4" width="10" height="8" rx="2" stroke="#0d9488" strokeWidth="1.5"/><path d="M6 6h4" stroke="#0d9488" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><rect x="3" y="4" width="10" height="8" rx="2" fill="#fff" /><rect x="3" y="4" width="10" height="8" rx="2" stroke="#0d9488" strokeWidth="1.5" /><path d="M6 6h4" stroke="#0d9488" strokeWidth="1.2" strokeLinecap="round" /></svg>
               </span>
-              <span className="font-semibold text-teal-700 text-xs">Tauhidullah</span>
+              <span className="font-semibold text-teal-700 text-xs">RA Riyadul Falah</span>
             </div>
             {/* Label Leadership */}
             <div className="absolute left-1/2 translate-x-[120%] top-[7%] md:top-[14%] animate-floatY2 flex items-center gap-2 bg-white/90 rounded-xl shadow-lg px-3 py-1 border border-amber-200">
               <span className="inline-flex items-center justify-center w-6 h-6 bg-amber-400 rounded-full">
-                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#fff"/><circle cx="8" cy="8" r="6" stroke="#eab308" strokeWidth="1.5"/><path d="M8 5v3l2 2" stroke="#eab308" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#fff" /><circle cx="8" cy="8" r="6" stroke="#eab308" strokeWidth="1.5" /><path d="M8 5v3l2 2" stroke="#eab308" strokeWidth="1.2" strokeLinecap="round" /></svg>
               </span>
-              <span className="font-semibold text-amber-700 text-xs">Leadership</span>
+              <span className="font-semibold text-amber-700 text-xs">MITA Ma&apos;rifa</span>
             </div>
             {/* Label Kemandirian */}
             <div className="absolute left-1/2 -translate-x-[160%] top-[40%] md:top-[48%] animate-floatX1 flex items-center gap-2 bg-white/90 rounded-xl shadow-lg px-3 py-1 border border-yellow-300">
               <span className="inline-flex items-center justify-center w-6 h-6 bg-yellow-400 rounded-full">
-                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" rx="2" fill="#fff"/><rect x="4" y="4" width="8" height="8" rx="2" stroke="#facc15" strokeWidth="1.5"/><path d="M8 7v2" stroke="#facc15" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" rx="2" fill="#fff" /><rect x="4" y="4" width="8" height="8" rx="2" stroke="#facc15" strokeWidth="1.5" /><path d="M8 7v2" stroke="#facc15" strokeWidth="1.2" strokeLinecap="round" /></svg>
               </span>
-              <span className="font-semibold text-yellow-700 text-xs">Kemandirian</span>
+              <span className="font-semibold text-yellow-700 text-xs">MTs Ma&apos;rifa</span>
             </div>
             {/* Label Rahmatan lil'alamiin */}
             <div className="absolute left-1/2 translate-x-[100%] top-[55%] md:top-[65%] animate-floatX2 flex items-center gap-2 bg-white/90 rounded-xl shadow-lg px-3 py-1 border border-teal-300">
               <span className="inline-flex items-center justify-center w-6 h-6 bg-teal-600 rounded-full">
-                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#fff"/><circle cx="8" cy="8" r="6" stroke="#14b8a6" strokeWidth="1.5"/><path d="M6 10l4-4" stroke="#14b8a6" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#fff" /><circle cx="8" cy="8" r="6" stroke="#14b8a6" strokeWidth="1.5" /><path d="M6 10l4-4" stroke="#14b8a6" strokeWidth="1.2" strokeLinecap="round" /></svg>
               </span>
-              <span className="font-semibold text-teal-800 text-xs">Rahmatan lil'alamiin</span>
+              <span className="font-semibold text-teal-800 text-xs">SMK Ma&apos;rifa</span>
             </div>
             <style jsx>{`
               @keyframes floatY1 {

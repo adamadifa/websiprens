@@ -1,21 +1,48 @@
 "use client";
 import React, { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Home, Layout, Folder, CheckSquare, BarChart2, Users, Bell, HelpCircle, Settings, ChevronDown, ChevronUp, User } from "react-feather";
+import { Home, Folder, CheckSquare, BarChart2, Bell, HelpCircle, Settings, ChevronDown, User } from "react-feather";
 
 interface UserSidebarLayoutProps {
   children: ReactNode;
 }
 
+interface UserData {
+  id?: string;
+  name?: string;
+  email?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 export default function UserSidebarLayout({ children }: UserSidebarLayoutProps) {
-  // State untuk menu expand/collapse (opsional)
-  const [reportOpen, setReportOpen] = React.useState(false);
-  const [userOpen, setUserOpen] = React.useState(false);
+  // State untuk sidebar mobile
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [userData, setUserData] = React.useState<UserData | null>(null);
+  const [isClient, setIsClient] = React.useState(false);
 
   // Tutup sidebar saat klik menu di mobile
   const closeSidebar = () => setSidebarOpen(false);
+
+  // Ambil data user dari localStorage
+  React.useEffect(() => {
+    setIsClient(true);
+    if (typeof window !== 'undefined') {
+      const user = localStorage.getItem('user');
+      if (user) {
+        try {
+          const parsedUser = JSON.parse(user) as UserData;
+          setUserData(parsedUser);
+        } catch (error) {
+          console.error('Gagal mengurai data pengguna dari localStorage:', error);
+          setUserData(null);
+        }
+      } else {
+        setUserData(null);
+      }
+    }
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -47,7 +74,7 @@ export default function UserSidebarLayout({ children }: UserSidebarLayoutProps) 
         </div>
         {/* Header */}
         <div className="flex items-center gap-3 mb-6 px-2">
-          <img src="/assets/images/logo/alamin.png" alt="Logo" className="max-h-8 w-auto block" style={{ maxWidth: 120 }} />
+          <Image src="/assets/images/logo/alamin.png" alt="Logo" width={120} height={32} className="max-h-8 w-auto block" />
           <span className="font-bold text-lg tracking-wide">SPMB</span>
         </div>
         {/* Search */}
@@ -106,8 +133,12 @@ export default function UserSidebarLayout({ children }: UserSidebarLayoutProps) 
             <User size={22} className="text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-semibold text-sm truncate">Anita Cruz</div>
-            <div className="text-xs text-white/70 truncate">anita@untitledui.com</div>
+            <div className="font-semibold text-sm truncate">
+              {isClient && userData?.name ? userData.name : 'User'}
+            </div>
+            <div className="text-xs text-white/70 truncate">
+              {isClient && userData?.email ? userData.email : 'user@example.com'}
+            </div>
           </div>
           <button className="ml-2 text-white/60 hover:text-white"><ChevronDown size={18} /></button>
         </div>
