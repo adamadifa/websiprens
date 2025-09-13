@@ -1,14 +1,18 @@
 import React, { useState, useEffect, ChangeEvent, FocusEvent, FormEvent } from "react";
 import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import CustomToast from '../components/CustomToast';
 import api from '../api/axios';
 import endpoints from '../api/endpoints';
 import { Unit } from '../api/types';
-import { Home, BookOpen, Clipboard, User, AlertCircle, Phone } from "react-feather";
+import { Home, BookOpen, Clipboard, User, AlertCircle, Phone, LogIn } from "react-feather";
 import styles from "../styles/RegisterForm.module.css";
 
 export default function Register() {
+  const router = useRouter();
   const [units, setUnits] = useState<Unit[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
@@ -101,14 +105,33 @@ export default function Register() {
         const res = await api.post('/auth/register-siswa', form);
         const data = res.data;
         if (data.success) {
-          toast.custom((t) => (
-            <CustomToast
-              type="success"
-              title="Well done!"
-              message={data.message || 'Registrasi berhasil!'}
-              onClose={() => toast.dismiss(t.id)}
-            />
-          ));
+          // Check if API returns token and user data (auto-login after registration)
+          if (data.data && data.data.token && data.data.user) {
+            // Store token and user data in localStorage for auto-login
+            localStorage.setItem("token", data.data.token);
+            localStorage.setItem("user", JSON.stringify(data.data.user));
+
+            toast.custom((t) => (
+              <CustomToast
+                type="success"
+                title="Registrasi Berhasil!"
+                message="Akun berhasil dibuat dan Anda sudah login. Mengarahkan ke dashboard..."
+                onClose={() => toast.dismiss(t.id)}
+              />
+            ));
+          } else {
+            // Fallback if no auto-login data
+            toast.custom((t) => (
+              <CustomToast
+                type="success"
+                title="Registrasi Berhasil!"
+                message="Akun berhasil dibuat! Silakan login untuk melanjutkan."
+                onClose={() => toast.dismiss(t.id)}
+              />
+            ));
+          }
+
+          // Clear form
           setForm({
             name: "",
             email: "",
@@ -127,6 +150,11 @@ export default function Register() {
             no_hp: "",
             kode_unit: ""
           });
+
+          // Redirect to dashboard after 2 seconds
+          setTimeout(() => {
+            router.push('/dashboard');
+          }, 2000);
         } else {
           toast.custom((t) => (
             <CustomToast
@@ -137,7 +165,8 @@ export default function Register() {
             />
           ));
         }
-      } catch (err) {
+      } catch (error) {
+        console.error('Registration error:', error);
         toast.custom((t) => (
           <CustomToast
             type="error"
@@ -162,7 +191,7 @@ export default function Register() {
       </Head>
       <div className={"min-h-screen flex flex-col-reverse md:flex-row " + styles.mobileStack}>
         <div className={"hidden md:flex md:w-1/2 text-white flex-col justify-center px-8 py-12 gap-10 relative overflow-hidden " + styles.leftBgImage}>
-          <img src="/assets/images/logo/logowithtext.png" alt="Logo" className={styles.logoCorner} />
+          <Image src="/assets/images/logo/logowithtext.png" alt="Logo" width={200} height={80} className={styles.logoCorner} />
           <div className="max-w-md mx-auto space-y-10">
             <div className="flex items-center gap-4">
               <div className="bg-white/10 p-4 rounded-full flex items-center justify-center">
@@ -203,7 +232,7 @@ export default function Register() {
           <div className="w-full max-w-xl relative z-10">
             <div className="flex flex-col items-center mb-8">
               <div className="bg-teal-100 rounded-full p-3 mb-2 shadow-md flex items-center justify-center">
-                <img src="/assets/images/logo/alamin.png" alt="Logo" style={{ width: 64, height: 64, objectFit: 'contain' }} />
+                <Image src="/assets/images/logo/alamin.png" alt="Logo" width={64} height={64} style={{ objectFit: 'contain' }} />
               </div>
               <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-1 text-center">Sistem Penerimaan <br /><span className="text-teal-700">Murid Baru 2026/2027</span></h2>
               <p className="text-gray-500 text-center text-sm max-w-md">Isi data diri dengan lengkap dan benar untuk proses pendaftaran siswa baru di Pondok Pesantren RIYADUL FALAH.</p>
@@ -350,6 +379,18 @@ export default function Register() {
                       'Daftar Sekarang'
                     )}
                   </button>
+                </div>
+                <div className="pt-4 text-center">
+                  <p className="text-sm text-gray-600 flex items-center justify-center gap-2">
+                    Sudah punya akun?
+                    <Link
+                      href="/login"
+                      className="text-teal-700 font-semibold hover:text-teal-800 transition-colors duration-200 flex items-center gap-1"
+                    >
+                      <LogIn size={16} />
+                      Masuk ke akun Anda
+                    </Link>
+                  </p>
                 </div>
               </form>
             </div>
