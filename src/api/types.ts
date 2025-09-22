@@ -28,3 +28,42 @@ export interface PrestasiSiswa {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface SebaranAlumni {
+  id: number;
+  nama_universitas: string;
+  logo: string;
+  logo_url: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ApiListResponse<T> {
+  status: 'success' | 'error';
+  count?: number;
+  data: T[];
+  message?: string;
+}
+
+export interface Visi {
+  id: number;
+  deskripsi: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface Misi {
+  id: number;
+  judul: string;
+  deskripsi: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface VisiMisiResponse {
+  status: 'success' | 'error';
+  visi: Visi;
+  misi: Misi[];
+  misi_count: number;
+  message?: string;
+}

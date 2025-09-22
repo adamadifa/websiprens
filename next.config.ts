@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  output: 'export', // Enable for static export
   trailingSlash: true,
-  /* config options here */
+  // Nonaktifkan Image Optimization untuk static export
   images: {
-    unoptimized: true, // Nonaktifkan image optimization untuk static export
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "http",
@@ -40,7 +40,6 @@ const nextConfig: NextConfig = {
       // Tambahkan domain lain di sini jika perlu
     ],
   },
-
   eslint: {
     ignoreDuringBuilds: true, // ✅ ini akan nonaktifkan error eslint saat build
   },

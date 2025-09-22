@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "postbuild": "next-sitemap",
-    "export": "next export"
+    "export": "next build",
+    "preview": "npx serve out",
+    "deploy": "node scripts/generate-static.js"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",

@@ -29,6 +29,12 @@ const endpoints = {
   prestasiSiswa: {
     getAll: '/public/prestasi-siswa',
   },
+  publicAlumni: {
+    getSebaran: '/public/sebaran-alumni',
+  },
+  publicVisiMisi: {
+    getVisiMisi: '/public/visi-misi',
+  },
   pendaftaronline: {
     profilependaftar: (id: string | number) => `/pendaftaranonline/${id}`,
     updateProfile: (id: string | number) => `/pendaftaranonline/${id}/update`,

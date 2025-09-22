@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Ganti URL ini dengan base URL API kamu
 const api = axios.create({
-  baseURL: process.env.BASE_API_URL || 'http://127.0.0.1:8000/api',
+  baseURL: process.env.BASE_API_URL || 'https://fintren.riyadulfalah.com/api',
   timeout: 10000, // 10 detik timeout
   headers: {
     'Content-Type': 'application/json',
@@ -23,9 +23,12 @@ const api = axios.create({
 // (Opsional) Tambah interceptor untuk request/response jika perlu
 api.interceptors.request.use(config => {
   // Misal: tambahkan token auth jika ada
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  // Cek apakah kita di browser (client-side)
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });

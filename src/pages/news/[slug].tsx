@@ -17,21 +17,26 @@ export default function NewsDetail() {
     const [otherNews, setOtherNews] = useState<any[]>([]);
     const [loadingOther, setLoadingOther] = useState(true);
 
+    // Fetch data berita detail secara dinamis
     useEffect(() => {
         if (!slug || typeof slug !== 'string') return;
+
         setLoading(true);
         setError(null);
+
         api.get(endpoints.publicPosts.getDetail(slug))
             .then(res => {
                 setData(res.data?.data);
                 setLoading(false);
             })
-            .catch(() => {
-                setError("Gagal memuat detail berita.");
+            .catch(err => {
+                console.error('Error fetching news detail:', err);
+                setError("Berita tidak ditemukan.");
                 setLoading(false);
             });
     }, [slug]);
 
+    // Fetch berita lainnya
     useEffect(() => {
         setLoadingOther(true);
         api.get(endpoints.publicPosts.getRandomPost)

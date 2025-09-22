@@ -149,12 +149,9 @@ const HeroSection = () => {
                                         />
                                     </svg>
                                     <div>
-                                        <div className="text-2xl md:text-3xl font-extrabold text-gray-800 leading-tight">
-                                            88%
-                                        </div>
-                                        <div className="text-xs md:text-sm font-semibold text-gray-700 -mt-1">
-                                            Lulusan Diterima
-                                            <br className="hidden md:block" /> di Kampus Favorit
+                                        <div className="text-sm md:text-base font-semibold text-gray-700 leading-tight">
+                                            Ayo Bergabung
+                                            <br className="hidden md:block" /> Bersama kami !
                                         </div>
                                     </div>
                                 </div>
